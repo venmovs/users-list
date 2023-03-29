@@ -1,0 +1,27 @@
+@import "assets/variables";
+@import "assets/mixins";
+
+.listItem {
+  @include flex(space-between, end, column);
+  flex-flow: wrap;
+  width: 250px;
+  height: 250px;
+  background-color: $background-primary;
+  text-decoration: none;
+  margin: $margin-m;
+  border-radius: $border-l;
+  padding: $padding-m;
+  transition: background-color 0.2s linear;
+  &:hover {
+    background-color: $background-primary-light;
+  }
+  @include devices(tablet) {
+    width: 100%;
+  }
+  &__content {
+    @include flex(start, baseline, column);
+  }
+  &__button {
+    width: 100%;
+  }
+}

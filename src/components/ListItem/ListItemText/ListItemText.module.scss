@@ -1,0 +1,14 @@
+@import "assets/variables";
+
+.listItemText {
+  display: inline-block;
+  width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: black;
+  margin: $margin-s;
+  &__attribute {
+    text-transform: capitalize;
+  }
+}

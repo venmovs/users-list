@@ -1,27 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useGetUsersQuery } from '../../services/users-api';
 import Loading from '../UI/Loading';
+import Error from '../UI/Error';
+import ListItem from '../ListItem';
+import style from './UserList.module.scss';
 
 function UserList() {
   const { isLoading, isError, data: users } = useGetUsersQuery();
-  console.log(users);
+
+  const reload = () => {
+    window.location.reload();
+  };
+
   if (isLoading) {
     return <Loading />;
   }
-  const renderList = users?.map(({
-    name, email, company, id,
-  }) => (
-    <div key={id}>
-      {name}
-      <span>{email}</span>
-      <span>{company.name}</span>
-      <Link to={`/${id}`}>more...</Link>
-    </div>
-  ));
+
+  if (isError) {
+    return <Error onClick={reload} actionLabel="Try again" />;
+  }
+
+  const renderUsers = users?.map((user) => <ListItem key={user.id} {...user} />);
+
   return (
-    <main>
-      {renderList}
+    <main className={style.userList}>
+      {renderUsers}
     </main>
   );
 }
