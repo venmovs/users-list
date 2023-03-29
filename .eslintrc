@@ -16,6 +16,8 @@
   ],
   "rules": {
     "semi": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
     "react/function-component-definition": "off",
     "import/no-extraneous-dependencies": [
       "off",
