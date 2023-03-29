@@ -6,7 +6,7 @@ import style from './Loading.module.scss';
 function Loading() {
   return (
     <div className={style.loading}>
-      <Typography variant="h6">
+      <Typography color="white">
         Loading will take a few seconds..
       </Typography>
       <CircularProgress />
