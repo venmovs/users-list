@@ -1,4 +1,8 @@
+@import "assets/mixins";
+
 .userList {
-  display: flex;
-  flex-flow: wrap;
+  &__listWrapper {
+    @include flex(unset, unset);
+    flex-flow: wrap;
+  }
 }
