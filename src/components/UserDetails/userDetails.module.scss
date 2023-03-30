@@ -1,3 +1,10 @@
-.userDetail {
+@import "assets/variables";
+@import "assets/mixins";
 
+.userDetail {
+  padding: $padding-m;
+  &__list {
+    @include flex(start, center, row);
+    flex-flow: wrap;
+  }
 }

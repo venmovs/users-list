@@ -1,9 +1,13 @@
 import React, { FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@mui/material';
 import { useGetUserByIdQuery } from '../../services/users-api';
 import Loading from '../UI/Loading';
 import Error from '../UI/Error';
 import CardField from '../UserCard/CardField';
+import style from './userDetails.module.scss';
+import flattenObject from '../../utility/flattenObject';
+import formatUnderscoreString from '../../utility/formatUnderscoreString';
 
 const UserDetails: FC = () => {
   const location = useLocation();
@@ -22,17 +26,33 @@ const UserDetails: FC = () => {
     );
   }
 
-  const {
-    id, address, company, ...additionalInfo
-  } = user;
+  const { id, ...additionalInformation } = user;
 
-  const renderUserInfo = Object.entries(additionalInfo).map(
-    ([key, value]) => <CardField key={key + value} name={key} value={value} />,
+  const flattenUserInformation = flattenObject(additionalInformation);
+
+  const renderUserInformation = Object.entries(flattenUserInformation).map(
+    ([key, value]) => (
+      <CardField
+        key={key + value}
+        name={formatUnderscoreString(key)}
+        value={value}
+      />
+    ),
   );
 
   return (
-    <section>
-      {renderUserInfo}
+    <section className={style.userDetail}>
+      <Button variant="contained" component={Link} to="/">
+        Go back
+      </Button>
+      <h1>
+        {user.username}
+        &nbsp;
+        profile
+      </h1>
+      <div className={style.userDetail__list}>
+        {renderUserInformation}
+      </div>
     </section>
   );
 };
