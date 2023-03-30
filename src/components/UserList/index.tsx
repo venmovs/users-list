@@ -45,12 +45,13 @@ function UserList() {
   }
 
   const renderUsers = users?.map((user) => <ListItem key={user.id} {...user} />);
+  const renderNotFound = <h3 className={style.userList__notFound}>Users not found</h3>;
 
   return (
     <main className={style.userList}>
       <Search id="search" label="Find user" changeSearchValue={changeSearchValue} searchValue={searchValue} />
       <section className={style.userList__listWrapper}>
-        {renderUsers}
+        {users?.length ? renderUsers : renderNotFound}
       </section>
     </main>
   );
