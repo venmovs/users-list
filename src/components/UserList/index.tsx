@@ -1,14 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import {
-  Box, FormControl, InputLabel, OutlinedInput,
-} from '@mui/material';
 import { useGetUsersQuery } from '../../services/users-api';
 import Loading from '../UI/Loading';
 import Error from '../UI/Error';
 import ListItem from '../ListItem';
 import style from './UserList.module.scss';
 import { User } from '../../services/types';
-import { StringKeys } from './types';
+import filterObjectsList from '../../utility/filterObjectsList';
+import Search from '../Search';
 
 function UserList() {
   const { isLoading, isError, data } = useGetUsersQuery();
@@ -21,22 +19,14 @@ function UserList() {
     }
   }, [data]);
 
-  const filterUsers = (targetUser: string, targetParameter: StringKeys<User>) => {
-    if (!data) {
-      return [];
-    }
-    const usersCopy = [...data];
-    const regex = new RegExp(targetUser, 'gi');
-    return usersCopy.filter((user) => user[targetParameter].match(regex));
-  };
-
   const changeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setSearchValue(inputValue);
-    const foundByNames = filterUsers(inputValue, 'name');
-    const foundByEmail = filterUsers(inputValue, 'email');
-    const uniqElements = new Set([...foundByNames, ...foundByEmail]);
-    setUsers(Array.from(uniqElements));
+    if (!data) {
+      return;
+    }
+    const filteredUser = filterObjectsList<User>(data, inputValue, ['name', 'email']);
+    setUsers(filteredUser);
     if (!inputValue.length) {
       setUsers(data);
     }
@@ -58,19 +48,7 @@ function UserList() {
 
   return (
     <main className={style.userList}>
-      <Box p={1}>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="search">
-            Find user
-          </InputLabel>
-          <OutlinedInput
-            value={searchValue}
-            onChange={changeSearchValue}
-            id="search"
-            label="Find user"
-          />
-        </FormControl>
-      </Box>
+      <Search id="search" label="Find user" changeSearchValue={changeSearchValue} searchValue={searchValue} />
       <section className={style.userList__listWrapper}>
         {renderUsers}
       </section>

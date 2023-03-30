@@ -1,4 +1,4 @@
 export interface ErrorProps {
-  actionLabel: string;
-  onClick: () => void;
+  actionLabel: string,
+  onClick: () => void,
 }
