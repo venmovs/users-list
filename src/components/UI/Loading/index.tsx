@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
-import style from './Loading.module.scss';
+import style from './loading.module.scss';
 
 function Loading() {
   return (

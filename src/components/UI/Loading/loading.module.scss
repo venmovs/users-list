@@ -1,0 +1,9 @@
+@import "assets/mixins";
+@import "assets/variables";
+
+.loading {
+  @include flex(center, center, column);
+  gap: 20px;
+  @include fullScreen();
+  background-color: $primary;
+}

@@ -2,11 +2,12 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useGetUsersQuery } from '../../services/users-api';
 import Loading from '../UI/Loading';
 import Error from '../UI/Error';
-import ListItem from '../ListItem';
-import style from './UserList.module.scss';
+import UserCard from '../UserCard';
+import style from './userList.module.scss';
 import { User } from '../../services/types';
 import filterObjectsList from '../../utility/filterObjectsList';
 import Search from '../Search';
+import reload from '../../utility/reload';
 
 function UserList() {
   const { isLoading, isError, data } = useGetUsersQuery();
@@ -32,10 +33,6 @@ function UserList() {
     }
   };
 
-  const reload = () => {
-    window.location.reload();
-  };
-
   if (isLoading) {
     return <Loading />;
   }
@@ -44,7 +41,7 @@ function UserList() {
     return <Error onClick={reload} actionLabel="Try again" />;
   }
 
-  const renderUsers = users?.map((user) => <ListItem key={user.id} {...user} />);
+  const renderUsers = users?.map((user) => <UserCard key={user.id} {...user} />);
   const renderNotFound = <h3 className={style.userList__notFound}>Users not found</h3>;
 
   return (
