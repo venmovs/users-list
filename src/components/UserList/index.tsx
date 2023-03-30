@@ -7,10 +7,11 @@ import style from './userList.module.scss';
 import { User } from '../../services/types';
 import filterObjectsList from '../../utility/filterObjectsList';
 import Search from '../Search';
-import reload from '../../utility/reload';
 
 function UserList() {
-  const { isLoading, isError, data } = useGetUsersQuery();
+  const {
+    isLoading, isError, data, refetch,
+  } = useGetUsersQuery();
   const [searchValue, setSearchValue] = useState<string>('');
   const [users, setUsers] = useState<User[] | undefined>([]);
 
@@ -38,7 +39,11 @@ function UserList() {
   }
 
   if (isError) {
-    return <Error onClick={reload} actionLabel="Try again" />;
+    return (
+      <Error onClick={refetch} actionLabel="Try again">
+        Failed to load users
+      </Error>
+    );
   }
 
   const renderUsers = users?.map((user) => <UserCard key={user.id} {...user} />);

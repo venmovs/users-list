@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import style from './error.module.scss';
 import { ErrorProps } from './types';
 
-const Error: FC<ErrorProps> = ({ actionLabel, onClick }) => (
+const Error: FC<ErrorProps> = ({ actionLabel, onClick, children }) => (
   <div className={style.error}>
     <Typography color="white">
-      Oops, something went wrong
+      {children}
     </Typography>
     <Button onClick={onClick} variant="contained">
       {actionLabel}
